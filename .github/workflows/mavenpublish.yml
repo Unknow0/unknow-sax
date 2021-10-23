@@ -20,8 +20,6 @@ jobs:
         server-username: MVN_USER
         server-password: MVN_PASS
 
-    - uses: Unknow0/package@master
-
     - name: set version
       run: mvn -B versions:set -DnewVersion=${GITHUB_REF##*/}
 
