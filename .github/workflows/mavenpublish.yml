@@ -4,8 +4,6 @@ on:
   push:
     tags:
       - 'release/*'
-env:
-  GITHUB_TOKEN: ${{secrets.TOKEN}}
 
 jobs:
   build:
@@ -14,9 +12,14 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Set up JDK 1.8
-      uses: actions/setup-java@v1
+      uses: actions/setup-java@v2
       with:
+        distribution: adopt
         java-version: 1.8
+        server-id: repsy
+        server-username: MVN_USER
+        server-password: MVN_PASS
+
     - uses: Unknow0/package@master
 
     - name: set version
@@ -27,3 +30,7 @@ jobs:
 
     - name: Publish to GitHub Packages Apache Maven
       run: mvn -B deploy
+      with:
+        MVN_USER: ${{secret.REPSY_USER}}
+        MVN_PASS: ${{secret.REPSY_PASS}}
+
