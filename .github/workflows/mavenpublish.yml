@@ -31,6 +31,6 @@ jobs:
     - name: Publish to GitHub Packages Apache Maven
       run: mvn -B deploy
       env:
-        MVN_USER: ${{secret.REPSY_USER}}
-        MVN_PASS: ${{secret.REPSY_PASS}}
+        MVN_USER: ${{secrets.REPSY_USER}}
+        MVN_PASS: ${{secrets.REPSY_PASS}}
 
