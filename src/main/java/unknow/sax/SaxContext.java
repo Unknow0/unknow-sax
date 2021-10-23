@@ -95,7 +95,7 @@ public class SaxContext extends DefaultHandler {
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes atts) throws SAXException {
 		sb.setLength(0);
-		if (uri != null && !uri.isBlank())
+		if (uri != null && !uri.isEmpty())
 			sb.append('{').append(uri).append('}');
 		sb.append(localName);
 		uri = sb.toString();
@@ -113,7 +113,7 @@ public class SaxContext extends DefaultHandler {
 	@Override
 	public void endElement(String uri, String localName, String qName) throws SAXException {
 		sb.setLength(0);
-		if (uri != null && !uri.isBlank())
+		if (uri != null && !uri.isEmpty())
 			sb.append('{').append(uri).append('}');
 		sb.append(localName);
 		uri = sb.toString();
