@@ -7,6 +7,7 @@ import org.xml.sax.SAXException;
  * @param <T> the context implementation
  * @author unknow
  */
+@SuppressWarnings("unused")
 public interface SaxHandler<T extends SaxContext> {
 	/**
 	 * start element
@@ -16,7 +17,6 @@ public interface SaxHandler<T extends SaxContext> {
 	 * @param context the context
 	 * @throws SAXException on parsing error
 	 */
-	@SuppressWarnings("unused")
 	default void startElement(String qname, String name, T context) throws SAXException {
 	}
 
@@ -29,7 +29,6 @@ public interface SaxHandler<T extends SaxContext> {
 	 * @param context the context
 	 * @throws SAXException on parsing error
 	 */
-	@SuppressWarnings("unused")
 	default void attributes(String qname, String name, Attributes atts, T context) throws SAXException {
 	}
 
@@ -41,7 +40,6 @@ public interface SaxHandler<T extends SaxContext> {
 	 * @param context the context
 	 * @throws SAXException on parsing error
 	 */
-	@SuppressWarnings("unused")
 	default void endElement(String qname, String name, T context) throws SAXException {
 	}
 }

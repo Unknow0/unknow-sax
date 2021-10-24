@@ -14,9 +14,9 @@ import org.xml.sax.helpers.DefaultHandler;
  * 
  * @author unknow
  */
-@SuppressWarnings("rawtypes")
 public class SaxContext extends DefaultHandler {
 	private final StringBuilder sb = new StringBuilder();
+	@SuppressWarnings("rawtypes")
 	private SaxHandler[] handlers = new SaxHandler[10];
 	private int i = -1;
 	private Object[] objects = new Object[10];
@@ -25,7 +25,7 @@ public class SaxContext extends DefaultHandler {
 	/**
 	 * create new SaxContext
 	 * 
-	 * @param rootHandler
+	 * @param rootHandler the first handler
 	 */
 	public SaxContext(SaxHandler<?> rootHandler) {
 		next(rootHandler);
@@ -36,7 +36,7 @@ public class SaxContext extends DefaultHandler {
 	 * 
 	 * @param h the next handler
 	 */
-	public void next(SaxHandler h) {
+	public void next(SaxHandler<?> h) {
 		if (i == handlers.length)
 			handlers = Arrays.copyOf(handlers, i + 5);
 		handlers[++i] = h;
@@ -61,6 +61,7 @@ public class SaxContext extends DefaultHandler {
 	/**
 	 * peek the object on stack
 	 * 
+	 * @param <T> result type
 	 * @return the first object on stack or null if no object on stack
 	 */
 	@SuppressWarnings("unchecked")
@@ -73,6 +74,7 @@ public class SaxContext extends DefaultHandler {
 	/**
 	 * pop the objects stack
 	 * 
+	 * @param <T> result type
 	 * @return the removed object
 	 */
 	@SuppressWarnings("unchecked")
