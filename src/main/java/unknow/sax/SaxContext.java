@@ -94,12 +94,7 @@ public class SaxContext extends DefaultHandler {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes atts) throws SAXException {
-		sb.setLength(0);
-		if (uri != null && !uri.isEmpty())
-			sb.append('{').append(uri).append('}');
-		sb.append(localName);
-		uri = sb.toString();
-		sb.setLength(0);
+		uri = uri == null || uri.isEmpty() ? localName : '{' + uri + '}' + localName;
 		handlers[i].startElement(uri, localName, this);
 		handlers[i].attributes(uri, localName, atts, this);
 	}
@@ -112,16 +107,12 @@ public class SaxContext extends DefaultHandler {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void endElement(String uri, String localName, String qName) throws SAXException {
-		sb.setLength(0);
-		if (uri != null && !uri.isEmpty())
-			sb.append('{').append(uri).append('}');
-		sb.append(localName);
-		uri = sb.toString();
-		sb.setLength(0);
+		uri = uri == null || uri.isEmpty() ? localName : '{' + uri + '}' + localName;
 		int l;
 		do {
 			l = i;
 			handlers[l].endElement(uri, localName, this);
 		} while (i != l);
+		sb.setLength(0);
 	}
 }
