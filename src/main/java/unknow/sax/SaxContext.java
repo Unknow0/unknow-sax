@@ -37,9 +37,9 @@ public class SaxContext extends DefaultHandler {
 	 * @param h the next handler
 	 */
 	public void next(SaxHandler<?> h) {
-		if (i == handlers.length)
+		if (++i == handlers.length)
 			handlers = Arrays.copyOf(handlers, i + 5);
-		handlers[++i] = h;
+		handlers[i] = h;
 	}
 
 	/**
@@ -55,6 +55,8 @@ public class SaxContext extends DefaultHandler {
 	 * @param obj object to push
 	 */
 	public void push(Object obj) {
+		if (o == objects.length)
+			objects = Arrays.copyOf(objects, o + 5);
 		objects[o++] = obj;
 	}
 

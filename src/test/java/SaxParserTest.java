@@ -58,12 +58,32 @@ public class SaxParserTest {
 		assertEquals("+root\ncontent\n-root\n", h.toString());
 	}
 
+	@Test
+	public void deep() throws ParserConfigurationException, SAXException, IOException {
+		SaxParserTest.TestHandler h = new TestHandler();
+		StringBuilder sb = new StringBuilder("<root>");
+		StringBuilder result = new StringBuilder("+root\n");
+		for (int i = 0; i < 100; i++) {
+			sb.append("<a>");
+			result.append("+a\n");
+		}
+		for (int i = 0; i < 100; i++) {
+			sb.append("</a>");
+			result.append("-a\n");
+		}
+		sb.append("</root>");
+		result.append("-root\n");
+		SaxParser.parse(h, new InputSource(new StringReader(sb.toString())));
+		assertEquals(result.toString(), h.toString());
+	}
+
 	private static final class TestHandler implements SaxHandler<SaxContext> {
 		private final StringBuilder sb = new StringBuilder();
 
 		@Override
 		public void startElement(String qname, String name, SaxContext context) throws SAXException {
 			sb.append('+').append(qname).append('\n');
+			context.push(this);
 		}
 
 		@Override
@@ -80,6 +100,7 @@ public class SaxParserTest {
 
 		@Override
 		public void endElement(String qname, String name, SaxContext context) throws SAXException {
+			context.pop();
 			String text = context.textContent();
 			if (!text.isEmpty())
 				sb.append(text).append('\n');
